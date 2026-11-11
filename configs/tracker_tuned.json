@@ -1,7 +1,7 @@
 {
   "best": "Lite tuned",
   "info": {
-    "run": "20261109_1538_helm_tracking",
+    "run": "20261111_1437",
     "tune_clips": [
       "v03_momen_001",
       "v08_momen_001",
@@ -27,7 +27,7 @@
       4,
       6
     ],
-    "detector": "dfine-n-1248x704-commercial-v3.onnx"
+    "detector": "dfine-n-960x540-stride-8.onnx"
   },
   "specs": {
     "Lite tuned": {
@@ -35,96 +35,96 @@
         "name": "Lite tuned",
         "kind": "lite",
         "params": {
-          "high_thresh": 0.517,
-          "low_thresh": 0.1,
-          "min_iou": 0.365,
-          "min_iou_low": 0.386,
+          "high_thresh": 0.537,
+          "low_thresh": 0.2,
+          "min_iou": 0.155,
+          "min_iou_low": 0.41,
           "buffers": [
-            0.1
+            0.0
           ],
-          "max_lost_sec": 4.159,
-          "std_vel": 0.886,
-          "std_pos": 0.099,
-          "lost_velocity_decay_sec": 1.455,
+          "max_lost_sec": 3.891,
+          "std_vel": 0.785,
+          "std_pos": 0.051,
+          "lost_velocity_decay_sec": 1.715,
           "confirm_hits": 2,
           "nsa": false,
-          "oru": true,
-          "ocr": true,
+          "oru": false,
+          "ocr": false,
           "cost": "iou",
           "max_h_ratio": 0.0,
-          "new_thresh": 0.535
+          "new_thresh": 0.577
         },
         "person_min": 0.05,
-        "nms_iou": 0.7,
+        "nms_iou": 0.6,
         "buffer_sec": 3.0,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8593080557723483,
-      "skor bawaan (tuning)": 0.8483124620487242,
-      "IDF1 test": 0.8280446613218627,
-      "ID switch test": 76
+      "skor tuned (tuning)": 0.8779236068718019,
+      "skor bawaan (tuning)": 0.8478981939424859,
+      "IDF1 test": 0.9009379678194642,
+      "ID switch test": 59
     },
     "ByteTrack tuned": {
       "spec": {
         "name": "ByteTrack tuned",
         "kind": "bytetrack",
         "params": {
-          "track_high_thresh": 0.458,
+          "track_high_thresh": 0.547,
           "track_low_thresh": 0.1,
-          "new_track_thresh": 0.557,
-          "match_thresh": 0.921
+          "new_track_thresh": 0.659,
+          "match_thresh": 0.886
         },
         "person_min": 0.1,
         "nms_iou": 0.6,
-        "buffer_sec": 6.657,
+        "buffer_sec": 1.731,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8039262862479278,
-      "skor bawaan (tuning)": 0.7960810134644551,
-      "IDF1 test": 0.766019419335152,
-      "ID switch test": 108
+      "skor tuned (tuning)": 0.835036900064756,
+      "skor bawaan (tuning)": 0.825668988747894,
+      "IDF1 test": 0.8229264668735871,
+      "ID switch test": 105
     },
     "OC-SORT tuned": {
       "spec": {
         "name": "OC-SORT tuned",
         "kind": "ocsort",
         "params": {
-          "track_high_thresh": 0.449,
-          "track_low_thresh": 0.2,
-          "new_track_thresh": 0.515,
+          "track_high_thresh": 0.435,
+          "track_low_thresh": 0.1,
+          "new_track_thresh": 0.442,
           "use_byte": true,
-          "match_thresh": 0.84,
-          "inertia": 0.332
+          "match_thresh": 0.872,
+          "inertia": 0.077
         },
-        "person_min": 0.1,
-        "nms_iou": 0.5,
-        "buffer_sec": 2.512,
+        "person_min": 0.05,
+        "nms_iou": 0.6,
+        "buffer_sec": 1.631,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8115890295847088,
-      "skor bawaan (tuning)": 0.805906175113213,
-      "IDF1 test": 0.7337102646238642,
-      "ID switch test": 129
+      "skor tuned (tuning)": 0.8427474100896932,
+      "skor bawaan (tuning)": 0.8328522979303201,
+      "IDF1 test": 0.8146027970093643,
+      "ID switch test": 87
     },
     "BoT-SORT tuned": {
       "spec": {
         "name": "BoT-SORT tuned",
         "kind": "botsort",
         "params": {
-          "track_high_thresh": 0.458,
-          "track_low_thresh": 0.2,
-          "new_track_thresh": 0.557,
-          "match_thresh": 0.921
+          "track_high_thresh": 0.547,
+          "track_low_thresh": 0.1,
+          "new_track_thresh": 0.659,
+          "match_thresh": 0.886
         },
-        "person_min": 0.05,
+        "person_min": 0.1,
         "nms_iou": 0.6,
-        "buffer_sec": 6.657,
+        "buffer_sec": 1.731,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8035259860725892,
-      "skor bawaan (tuning)": 0.7915801499370198,
-      "IDF1 test": 0.732664121568431,
-      "ID switch test": 117
+      "skor tuned (tuning)": 0.8273225440157768,
+      "skor bawaan (tuning)": 0.8214187316910184,
+      "IDF1 test": 0.8248543277897303,
+      "ID switch test": 99
     },
     "TrackTrack tuned": {
       "spec": {
@@ -137,69 +137,69 @@
           "tai_thr": 0.663,
           "new_track_thresh": 0.605
         },
-        "person_min": 0.3,
-        "nms_iou": 0.7,
-        "buffer_sec": 2.465,
+        "person_min": 0.05,
+        "nms_iou": 0.5,
+        "buffer_sec": 1.823,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8267417355153606,
-      "skor bawaan (tuning)": 0.7590344657385648,
-      "IDF1 test": 0.742794505258546,
-      "ID switch test": 138
+      "skor tuned (tuning)": 0.8625308335517387,
+      "skor bawaan (tuning)": 0.7828031066349649,
+      "IDF1 test": 0.8588795779965176,
+      "ID switch test": 132
     },
     "FastTrack tuned": {
       "spec": {
         "name": "FastTrack tuned",
         "kind": "fasttrack",
         "params": {
-          "track_high_thresh": 0.458,
-          "track_low_thresh": 0.2,
-          "new_track_thresh": 0.557,
-          "match_thresh": 0.921
+          "track_high_thresh": 0.547,
+          "track_low_thresh": 0.1,
+          "new_track_thresh": 0.659,
+          "match_thresh": 0.886
         },
-        "person_min": 0.05,
+        "person_min": 0.1,
         "nms_iou": 0.6,
-        "buffer_sec": 6.657,
+        "buffer_sec": 1.731,
         "det_every": 1
       },
-      "skor tuned (tuning)": 0.8091012771350339,
-      "skor bawaan (tuning)": 0.7852125289442784,
-      "IDF1 test": 0.7406137202078552,
-      "ID switch test": 120
+      "skor tuned (tuning)": 0.818003911496961,
+      "skor bawaan (tuning)": 0.8131833869995827,
+      "IDF1 test": 0.8272388737973009,
+      "ID switch test": 102
     },
     "Lite tuned det/2": {
       "spec": {
         "name": "Lite tuned det/2",
         "kind": "lite",
         "params": {
-          "high_thresh": 0.517,
-          "low_thresh": 0.1,
-          "min_iou": 0.365,
-          "min_iou_low": 0.386,
+          "high_thresh": 0.537,
+          "low_thresh": 0.2,
+          "min_iou": 0.155,
+          "min_iou_low": 0.41,
           "buffers": [
-            0.1
+            0.0
           ],
-          "max_lost_sec": 4.159,
-          "std_vel": 0.886,
-          "std_pos": 0.099,
-          "lost_velocity_decay_sec": 1.455,
+          "max_lost_sec": 3.891,
+          "std_vel": 0.785,
+          "std_pos": 0.051,
+          "lost_velocity_decay_sec": 1.715,
           "confirm_hits": 2,
           "nsa": false,
-          "oru": true,
-          "ocr": true,
+          "oru": false,
+          "ocr": false,
           "cost": "iou",
           "max_h_ratio": 0.0,
-          "new_thresh": 0.535
+          "new_thresh": 0.577
         },
         "person_min": 0.05,
-        "nms_iou": 0.7,
+        "nms_iou": 0.6,
         "buffer_sec": 3.0,
         "det_every": 2
       },
       "skor tuned (tuning)": null,
       "skor bawaan (tuning)": null,
-      "IDF1 test": 0.7010428045289376,
-      "ID switch test": 108
+      "IDF1 test": 0.8063758349341515,
+      "ID switch test": 120
     }
   }
 }

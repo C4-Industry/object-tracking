@@ -1,0 +1,397 @@
+{
+  "run_id": "20261111_1006",
+  "quick": false,
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "tune_clips": [
+    "v03_momen_001",
+    "v08_momen_001",
+    "v09_momen_009",
+    "v11_momen_002",
+    "v18_momen_001",
+    "v04_momen_034",
+    "v05_momen_010",
+    "v14_momen_003",
+    "v16_momen_010",
+    "v17_momen_003"
+  ],
+  "test_clips": [
+    "v02_momen_013",
+    "v12_momen_001",
+    "v07_momen_003",
+    "v01_momen_037",
+    "v10_momen_003"
+  ],
+  "det_ms": 24.819916929118335,
+  "ref_agreement": [
+    {
+      "klip": "v03_momen_001",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 1.0,
+      "ID switch": 0,
+      "ID ByteTrack": 2,
+      "ID OC-SORT": 2
+    },
+    {
+      "klip": "v08_momen_001",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.6658556366585564,
+      "ID switch": 8,
+      "ID ByteTrack": 16,
+      "ID OC-SORT": 13
+    },
+    {
+      "klip": "v09_momen_009",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.991304347826087,
+      "ID switch": 4,
+      "ID ByteTrack": 12,
+      "ID OC-SORT": 11
+    },
+    {
+      "klip": "v11_momen_002",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.845545059994894,
+      "ID switch": 3,
+      "ID ByteTrack": 10,
+      "ID OC-SORT": 11
+    },
+    {
+      "klip": "v18_momen_001",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.7843224092116917,
+      "ID switch": 10,
+      "ID ByteTrack": 18,
+      "ID OC-SORT": 16
+    },
+    {
+      "klip": "v04_momen_034",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.9997782213351075,
+      "ID switch": 0,
+      "ID ByteTrack": 8,
+      "ID OC-SORT": 8
+    },
+    {
+      "klip": "v05_momen_010",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.9043620724964161,
+      "ID switch": 0,
+      "ID ByteTrack": 7,
+      "ID OC-SORT": 6
+    },
+    {
+      "klip": "v14_momen_003",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 1.0,
+      "ID switch": 0,
+      "ID ByteTrack": 7,
+      "ID OC-SORT": 7
+    },
+    {
+      "klip": "v16_momen_010",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.9001222992254383,
+      "ID switch": 0,
+      "ID ByteTrack": 8,
+      "ID OC-SORT": 7
+    },
+    {
+      "klip": "v17_momen_003",
+      "set": "tuning",
+      "IDF1 ByteTrack vs OC-SORT": 0.9631223110018439,
+      "ID switch": 2,
+      "ID ByteTrack": 12,
+      "ID OC-SORT": 10
+    },
+    {
+      "klip": "v02_momen_013",
+      "set": "test",
+      "IDF1 ByteTrack vs OC-SORT": 0.8797499588748149,
+      "ID switch": 6,
+      "ID ByteTrack": 6,
+      "ID OC-SORT": 5
+    },
+    {
+      "klip": "v12_momen_001",
+      "set": "test",
+      "IDF1 ByteTrack vs OC-SORT": 0.8163106796116505,
+      "ID switch": 6,
+      "ID ByteTrack": 10,
+      "ID OC-SORT": 11
+    },
+    {
+      "klip": "v07_momen_003",
+      "set": "test",
+      "IDF1 ByteTrack vs OC-SORT": 0.8909249563699826,
+      "ID switch": 1,
+      "ID ByteTrack": 17,
+      "ID OC-SORT": 12
+    },
+    {
+      "klip": "v01_momen_037",
+      "set": "test",
+      "IDF1 ByteTrack vs OC-SORT": 0.8991825613079019,
+      "ID switch": 0,
+      "ID ByteTrack": 8,
+      "ID OC-SORT": 6
+    },
+    {
+      "klip": "v10_momen_003",
+      "set": "test",
+      "IDF1 ByteTrack vs OC-SORT": 0.98005698005698,
+      "ID switch": 0,
+      "ID ByteTrack": 8,
+      "ID OC-SORT": 7
+    }
+  ],
+  "test_overall": [
+    {
+      "tracker": "Lite tuned",
+      "IDF1": 0.8280446613218627,
+      "ID switch": 76,
+      "cakupan": 0.9287447402261622,
+      "ID dibuat": 170,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "Lite BIoU",
+      "IDF1": 0.8016159573378203,
+      "ID switch": 86,
+      "cakupan": 0.9154094300288295,
+      "ID dibuat": 175,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "ByteTrack tuned",
+      "IDF1": 0.766019419335152,
+      "ID switch": 108,
+      "cakupan": 0.9036327081634703,
+      "ID dibuat": 162,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "OC-SORT",
+      "IDF1": 0.7544403995699982,
+      "ID switch": 121,
+      "cakupan": 0.899264387787856,
+      "ID dibuat": 183,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "BoT-SORT",
+      "IDF1": 0.753922415535611,
+      "ID switch": 135,
+      "cakupan": 0.9003092879895611,
+      "ID dibuat": 200,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "ByteTrack",
+      "IDF1": 0.7513199402238655,
+      "ID switch": 146,
+      "cakupan": 0.8940189788969398,
+      "ID dibuat": 212,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "TrackTrack tuned",
+      "IDF1": 0.742794505258546,
+      "ID switch": 138,
+      "cakupan": 0.8521949531702873,
+      "ID dibuat": 214,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "FastTrack tuned",
+      "IDF1": 0.7406137202078552,
+      "ID switch": 120,
+      "cakupan": 0.8735875322237693,
+      "ID dibuat": 161,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "FastTrack",
+      "IDF1": 0.736043478245762,
+      "ID switch": 155,
+      "cakupan": 0.8948681314645148,
+      "ID dibuat": 210,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "OC-SORT tuned",
+      "IDF1": 0.7337102646238642,
+      "ID switch": 129,
+      "cakupan": 0.8737715401102856,
+      "ID dibuat": 183,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "BoT-SORT tuned",
+      "IDF1": 0.732664121568431,
+      "ID switch": 117,
+      "cakupan": 0.8548457121800055,
+      "ID dibuat": 168,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "Lite tuned det/2",
+      "IDF1": 0.7010428045289376,
+      "ID switch": 108,
+      "cakupan": 0.7944434029604571,
+      "ID dibuat": 168,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "TrackTrack",
+      "IDF1": 0.6523434371374137,
+      "ID switch": 355,
+      "cakupan": 0.8252767396816998,
+      "ID dibuat": 420,
+      "ID referensi": 196
+    },
+    {
+      "tracker": "ByteTrack (sekarang)",
+      "IDF1": 0.6492563646595847,
+      "ID switch": 223,
+      "cakupan": 0.7986154309571335,
+      "ID dibuat": 271,
+      "ID referensi": 196
+    }
+  ],
+  "ablation": [
+    {
+      "tracker": "Lite tuned",
+      "IDF1": 0.8280446613218627,
+      "ID switch": 76,
+      "cakupan": 0.9287447402261622,
+      "selisih IDF1": 0.0
+    },
+    {
+      "tracker": "Lite tuned, NSA dibalik",
+      "IDF1": 0.8313622785226509,
+      "ID switch": 72,
+      "cakupan": 0.9288886586421956,
+      "selisih IDF1": 0.003317617200788159
+    },
+    {
+      "tracker": "Lite tuned, biaya dibalik (IoU/DIoU)",
+      "IDF1": 0.8289473904734533,
+      "ID switch": 78,
+      "cakupan": 0.9277390326145756,
+      "selisih IDF1": 0.00090272915159062
+    },
+    {
+      "tracker": "Lite tuned, gerbang rasio tinggi dibalik",
+      "IDF1": 0.7917143190880025,
+      "ID switch": 109,
+      "cakupan": 0.926564298198817,
+      "selisih IDF1": -0.036330342233860224
+    },
+    {
+      "tracker": "Lite tuned, hanya orang skor >= 0,5",
+      "IDF1": 0.7448455047486771,
+      "ID switch": 77,
+      "cakupan": 0.8098211243961773,
+      "selisih IDF1": -0.08319915657318566
+    },
+    {
+      "tracker": "Lite tuned, tanpa OCR",
+      "IDF1": 0.8044290894754681,
+      "ID switch": 104,
+      "cakupan": 0.921451048731045,
+      "selisih IDF1": -0.023615571846394623
+    },
+    {
+      "tracker": "Lite tuned, tanpa ORU",
+      "IDF1": 0.8277278469525994,
+      "ID switch": 72,
+      "cakupan": 0.928308440051642,
+      "selisih IDF1": -0.0003168143692633407
+    },
+    {
+      "tracker": "Lite tuned, tanpa box diperbesar",
+      "IDF1": 0.8237081740037665,
+      "ID switch": 90,
+      "cakupan": 0.9270877564922341,
+      "selisih IDF1": -0.004336487318096216
+    }
+  ],
+  "capacity": [
+    {
+      "FPS proses": 2,
+      "detektor tiap N frame": 1,
+      "deteksi/detik": 2.0,
+      "ms beban per kamera per detik": 94.0,
+      "kamera per jalur": 10.6,
+      "jalur untuk 12 kamera": 2
+    },
+    {
+      "FPS proses": 2,
+      "detektor tiap N frame": 2,
+      "deteksi/detik": 1.0,
+      "ms beban per kamera per detik": 69.2,
+      "kamera per jalur": 14.4,
+      "jalur untuk 12 kamera": 1
+    },
+    {
+      "FPS proses": 3,
+      "detektor tiap N frame": 1,
+      "deteksi/detik": 3.0,
+      "ms beban per kamera per detik": 119.4,
+      "kamera per jalur": 8.4,
+      "jalur untuk 12 kamera": 2
+    },
+    {
+      "FPS proses": 3,
+      "detektor tiap N frame": 2,
+      "deteksi/detik": 1.5,
+      "ms beban per kamera per detik": 82.1,
+      "kamera per jalur": 12.2,
+      "jalur untuk 12 kamera": 1
+    },
+    {
+      "FPS proses": 4,
+      "detektor tiap N frame": 1,
+      "deteksi/detik": 4.0,
+      "ms beban per kamera per detik": 144.7,
+      "kamera per jalur": 6.9,
+      "jalur untuk 12 kamera": 2
+    },
+    {
+      "FPS proses": 4,
+      "detektor tiap N frame": 2,
+      "deteksi/detik": 2.0,
+      "ms beban per kamera per detik": 95.0,
+      "kamera per jalur": 10.5,
+      "jalur untuk 12 kamera": 2
+    },
+    {
+      "FPS proses": 6,
+      "detektor tiap N frame": 1,
+      "deteksi/detik": 6.0,
+      "ms beban per kamera per detik": 195.3,
+      "kamera per jalur": 5.1,
+      "jalur untuk 12 kamera": 3
+    },
+    {
+      "FPS proses": 6,
+      "detektor tiap N frame": 2,
+      "deteksi/detik": 3.0,
+      "ms beban per kamera per detik": 120.9,
+      "kamera per jalur": 8.3,
+      "jalur untuk 12 kamera": 2
+    }
+  ],
+  "decode": {
+    "src_fps": 25.0,
+    "frames": 250,
+    "ms_per_frame": 1.7358286678791046,
+    "ms_per_video_second": 43.395716696977615,
+    "width": 2688,
+    "height": 1520
+  },
+  "best": "Lite tuned"
+}
