@@ -1,0 +1,33 @@
+{
+  "note": "File model tidak masuk git. Salin dari nana-detect-ppe/models/ atau unduh dari S3 (lihat models/README.md).",
+  "models": [
+    {
+      "path": "models/dfine-n-1248x704-commercial-v3.onnx",
+      "role": "detector",
+      "classes": [
+        "person",
+        "helmet",
+        "vest"
+      ],
+      "input": "Nx3x704x1248 (letterbox 16:9), orig_target_sizes Nx2 [W,H]",
+      "source": "AWS-Sagemaker/cctv-ppe-dfine/output/pytorch-training-2026-11-06-03-29-36-336/output/model.tar.gz:model.onnx (best_stg2.pth, dataset commercial_combined_v3)",
+      "sha256": "72155da8589277668811eb561dfd2f55d69fac8d8ebd6951fdff763793b903e2",
+      "eval": "test commercial_combined_v3, resize area: mAP50 0.867, helmet AP50 0.761 (docs/EVAL_COMMERCIAL_V3.md)",
+      "default": true
+    },
+    {
+      "path": "models/dfine-n-544x960-commercial-v3.onnx",
+      "role": "detector",
+      "classes": [
+        "person",
+        "helmet",
+        "vest"
+      ],
+      "input": "Nx3x544x960 (letterbox 16:9), orig_target_sizes Nx2 [W,H]",
+      "source": "AWS-Sagemaker/cctv-ppe-dfine/output/pytorch-training-2026-11-06-03-20-02-320/output/model.tar.gz:model.onnx (best_stg2.pth, dataset commercial_combined_v3)",
+      "sha256": "f39d5e1a99bb22a6c1c2f6f7fb71a580fded3716647e5c525102771bf3e1d4c5",
+      "eval": "test commercial_combined_v3, resize area: mAP50 0.821, helmet AP50 0.658 (docs/EVAL_COMMERCIAL_V3.md)",
+      "default": false
+    }
+  ]
+}

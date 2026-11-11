@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Model: tidak masuk git, lihat models/README.md
+models/**/*.onnx
+models/**/*.pt
+models/**/*.pth
+
+# Data dan hasil run
+data/
+outputs/
+experiments/**/*.mp4
+experiments/**/*.webm

@@ -1,0 +1,59 @@
+[project]
+name = "object-tracking"
+version = "0.1.0"
+description = "Lite tracker untuk CCTV FPS rendah (PPE), plus evaluasi, tuning, benchmark MOT17, dan aplikasi perbandingan tracker."
+readme = "README.md"
+authors = [{ name = "Nana" }]
+requires-python = ">=3.12,<3.13"
+# Inti tracker (lite.py + integration.py) hanya butuh dua paket ini.
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.13",
+]
+
+[project.optional-dependencies]
+# Baca video, detektor D-FINE ONNX, tabel hasil
+video = [
+    "opencv-python>=4.10",
+    "onnxruntime>=1.20",
+    "pandas>=2.2",
+]
+# Aplikasi Gradio "Bandingkan Tracker"
+app = [
+    "object-tracking[video]",
+    "gradio>=5.0",
+]
+# Tracker pembanding (ByteTrack, OC-SORT, BoT-SORT, dll.). Lisensi AGPL-3.0: hanya untuk evaluasi, jangan dikirim ke klien.
+compare = [
+    "ultralytics>=8.4.176",
+    "lapx>=0.5.11",
+]
+
+[dependency-groups]
+# Dipasang otomatis oleh `uv sync` (lihat default-groups): semua yang dibutuhkan notebook.
+explore = [
+    "object-tracking[video,app,compare]",
+    "matplotlib>=3.9",
+    "tqdm>=4.66",
+    "ipykernel>=6.29",
+    "ipywidgets>=8.1",
+]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.uv]
+default-groups = ["explore", "dev"]
+
+[project.scripts]
+tracker-compare = "object_tracking.compare_app:main"
+
+[build-system]
+requires = ["uv_build>=0.8,<0.13"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "object_tracking"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
