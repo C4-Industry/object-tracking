@@ -28,24 +28,53 @@ import numpy as np
 
 from .lite import LiteTracker, Track, TrackerConfig, nms
 
-# Parameter "Lite tuned" (notebook tuning CCTV, 10 klip tuning, dinilai di 5 klip kamera test).
-# Sama dengan configs/tracker_tuned.json, ditulis di sini supaya file ini bisa dipakai tanpa folder configs.
-LITE_TUNED_PARAMS = {
-    "high_thresh": 0.517, "low_thresh": 0.1, "new_thresh": 0.535,
-    "min_iou": 0.365, "min_iou_low": 0.386, "buffers": (0.1,),
-    "max_lost_sec": 4.159, "lost_velocity_decay_sec": 1.455, "confirm_hits": 2,
-    "std_vel": 0.886, "std_pos": 0.099, "nsa": False, "oru": True, "ocr": True,
-    "cost": "iou", "max_h_ratio": 0.0,
+# Parameter "Lite tuned" per detektor (hasil notebook 02: tuning di 10 klip CCTV, dinilai di 5 klip kamera test).
+# Ambang skor bergantung pada sebaran skor detektor, jadi setiap detektor punya set parameternya sendiri.
+# Ditulis di sini supaya file ini bisa dipakai tanpa folder configs. Harus sama dengan configs/tracker_tuned.json
+# untuk detektor yang sedang dipakai (dicek oleh tests/test_integration.py).
+LITE_PRESETS = {
+    # 11 Nov 2026, run 20261111_1437. IDF1 test 0,901, 59 ID switch (vs referensi dari detektor yang sama)
+    "dfine-n-960x540-stride-8": {
+        "params": {
+            "high_thresh": 0.537, "low_thresh": 0.2, "new_thresh": 0.577,
+            "min_iou": 0.155, "min_iou_low": 0.41, "buffers": (0.0,),
+            "max_lost_sec": 3.891, "lost_velocity_decay_sec": 1.715, "confirm_hits": 2,
+            "std_vel": 0.785, "std_pos": 0.051, "nsa": False, "oru": False, "ocr": False,
+            "cost": "iou", "max_h_ratio": 0.0,
+        },
+        "input": {"person_min": 0.05, "nms_iou": 0.6},
+    },
+    # 9 Nov 2026, run 20261109_1538. IDF1 test 0,828, 76 ID switch
+    "dfine-n-1248x704-commercial-v3": {
+        "params": {
+            "high_thresh": 0.517, "low_thresh": 0.1, "new_thresh": 0.535,
+            "min_iou": 0.365, "min_iou_low": 0.386, "buffers": (0.1,),
+            "max_lost_sec": 4.159, "lost_velocity_decay_sec": 1.455, "confirm_hits": 2,
+            "std_vel": 0.886, "std_pos": 0.099, "nsa": False, "oru": True, "ocr": True,
+            "cost": "iou", "max_h_ratio": 0.0,
+        },
+        "input": {"person_min": 0.05, "nms_iou": 0.7},
+    },
 }
-LITE_TUNED_INPUT = {"person_min": 0.05, "nms_iou": 0.7}   # penyaring deteksi orang sebelum masuk tracker
-LITE_TUNED_DETECTOR = "dfine-n-1248x704-commercial-v3.onnx"   # ambang skor di atas disetel untuk detektor ini
+# Lite tanpa tuning. Di label manusia PT SRP (notebook 05, 12 November 2026) setelan ini lebih baik daripada
+# "Lite tuned" untuk kedua detektor, jadi dipakai sebagai setelan awal di pipeline sampai ada tuning dengan label manusia.
+LITE_PRESETS["bawaan"] = {"params": {}, "input": {"person_min": 0.10, "nms_iou": 0.6}}
+LITE_TUNED_DETECTOR = "dfine-n-960x540-stride-8"              # detektor yang dipakai saat tuning notebook 02
+LITE_TUNED_PARAMS = LITE_PRESETS[LITE_TUNED_DETECTOR]["params"]
+LITE_TUNED_INPUT = LITE_PRESETS[LITE_TUNED_DETECTOR]["input"]   # penyaring deteksi orang sebelum masuk tracker
 
 
-def load_lite_config(path: str | Path | None = None, name: str = "Lite tuned") -> tuple[TrackerConfig, dict]:
+def load_lite_config(path: str | Path | None = None, name: str = "Lite tuned",
+                     detector: str | None = None) -> tuple[TrackerConfig, dict]:
     """Konfigurasi Lite: (TrackerConfig, {"person_min", "nms_iou"}).
-    path None = parameter bawaan di file ini. path = file JSON hasil tuning (configs/tracker_tuned.json)."""
+    path None = parameter di file ini untuk `detector` (None = LITE_TUNED_DETECTOR, "bawaan" = Lite tanpa tuning).
+    path = file JSON hasil tuning (configs/tracker_tuned.json)."""
     if path is None:
-        params, inp = dict(LITE_TUNED_PARAMS), dict(LITE_TUNED_INPUT)
+        key = Path(detector).stem if detector else LITE_TUNED_DETECTOR
+        if key not in LITE_PRESETS:
+            raise ValueError(f"belum ada parameter Lite untuk detektor '{key}'. Pilihan: {list(LITE_PRESETS)}. "
+                             "Jalankan notebook 02 dengan detektor ini lalu tambahkan hasilnya ke LITE_PRESETS.")
+        params, inp = dict(LITE_PRESETS[key]["params"]), dict(LITE_PRESETS[key]["input"])
     else:
         spec = json.loads(Path(path).read_text())["specs"][name]["spec"]
         if spec.get("kind", "lite") != "lite":
@@ -94,8 +123,9 @@ class PersonTracker:
         self.reset()
 
     @classmethod
-    def tuned(cls, path: str | Path | None = None, name: str = "Lite tuned") -> "PersonTracker":
-        cfg, inp = load_lite_config(path, name)
+    def tuned(cls, path: str | Path | None = None, name: str = "Lite tuned", detector: str | None = None) -> "PersonTracker":
+        """Parameter Lite tuned. detector: nama file model detektor (mis. "dfine-n-960x540-stride-8"), None = bawaan."""
+        cfg, inp = load_lite_config(path, name, detector)
         return cls(cfg, **inp)
 
     def reset(self) -> None:
@@ -169,8 +199,8 @@ class LiteForComplianceTracker:
     """
 
     def __init__(self, fps: float = 25.0, config: TrackerConfig | None = None, person_min: float | None = None,
-                 nms_iou: float | None = None, config_path: str | Path | None = None):
-        cfg, inp = load_lite_config(config_path)
+                 nms_iou: float | None = None, config_path: str | Path | None = None, detector: str | None = None):
+        cfg, inp = load_lite_config(config_path, detector=detector)
         self.fps = float(fps)
         self.tracker = PersonTracker(config or cfg,
                                      person_min=inp["person_min"] if person_min is None else person_min,

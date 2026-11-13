@@ -32,7 +32,7 @@ from .zoo import all_presets
 VIDEO_DIRS = [Path.home() / "PPE - PT SRP" / "Dataset_Momen_PPE_Anonim", ROOT / "data" / "videos"]
 UPLOAD_DIR = ROOT / "data" / "videos"
 OUT_DIR = ROOT / "outputs" / "compare"
-DET_MODEL = ROOT / "models" / "dfine-n-1248x704-commercial-v3.onnx"
+DET_MODEL = ROOT / "models" / "dfine-n-960x540-stride-8.onnx"
 DEFAULT_TRACKERS = ["Lite tuned", "ByteTrack tuned", "ByteTrack (sekarang)"]
 UI_INTERVAL_SEC = 0.12          # gambar ke UI paling sering sekitar 8 kali per detik
 

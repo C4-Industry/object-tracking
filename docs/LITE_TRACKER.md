@@ -1,7 +1,9 @@
 # Lite tuned: tracker terbaik untuk CCTV FPS rendah
 
 Kode: `src/object_tracking/lite.py` (`LiteTracker.update` dan `predict`). API untuk pipeline: `src/object_tracking/integration.py` (`PersonTracker`, `LiteForComplianceTracker`). Untuk perbandingan: `TrackerRunner` di `zoo.py`
-Parameter: `configs/tracker_tuned.json`, kunci `"Lite tuned"`
+Parameter: `configs/tracker_tuned.json`, kunci `"Lite tuned"`, dan `LITE_PRESETS` di `integration.py` (satu set per detektor)
+
+> Dokumen ini menjelaskan Lite tuned untuk detektor `dfine-n-1248x704-commercial-v3`. Dengan detektor `dfine-n-960x540-stride-8`, hasil tuning mematikan OCR, ORU, dan box diperbesar (lihat `TRACKING_SUMMARY.md`). Alur di bawah tetap sama, hanya langkah yang opsinya mati dilewati.
 Perbandingan dengan tracker lain: [TRACKING_SUMMARY.md](TRACKING_SUMMARY.md)
 Lisensi, sumber ilmiah, dan cara membaca IDF1: [TRACKER_LISENSI_DAN_SUMBER.md](TRACKER_LISENSI_DAN_SUMBER.md)
 

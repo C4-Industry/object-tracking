@@ -134,18 +134,38 @@ def _xyxy_to_xywh(b: np.ndarray) -> np.ndarray:
     return np.stack([b[:, 0], b[:, 1], b[:, 2] - b[:, 0], b[:, 3] - b[:, 1]], 1)
 
 
+def _ioa(hb_xywh: np.ndarray, regions_xyxy: np.ndarray) -> np.ndarray:
+    """Porsi luas box (xywh) yang ada di dalam tiap area (xyxy)."""
+    x1, y1 = hb_xywh[:, 0:1], hb_xywh[:, 1:2]
+    x2, y2 = x1 + hb_xywh[:, 2:3], y1 + hb_xywh[:, 3:4]
+    iw = np.clip(np.minimum(x2, regions_xyxy[None, :, 2]) - np.maximum(x1, regions_xyxy[None, :, 0]), 0, None)
+    ih = np.clip(np.minimum(y2, regions_xyxy[None, :, 3]) - np.maximum(y1, regions_xyxy[None, :, 1]), 0, None)
+    area = np.maximum(hb_xywh[:, 2:3] * hb_xywh[:, 3:4], 1e-6)
+    return iw * ih / area
+
+
 def to_eval_frames(seq: Seq, hyp: dict) -> tuple[list, list]:
     """Siapkan gt dan hasil tracker per frame, dengan aturan resmi MOTChallenge:
     - gt yang dinilai: kelas pejalan kaki (1) dengan tanda 'dinilai' (kolom 7 = 1)
     - box tracker yang cocok (IoU >= 0,5) dengan orang diam, orang di kendaraan, pantulan, atau distraktor
-      dibuang, jadi tidak dihitung salah maupun benar."""
+      dibuang, jadi tidak dihitung salah maupun benar.
+    - (klip CCTV) box tracker yang separuh lebih luasnya ada di area yang diabaikan (seq.ignore_regions) dibuang,
+      dan hanya frame di seq.eval_frames yang dinilai kalau label tidak ada di setiap frame."""
     gt_by_f = {int(f): seq.gt[seq.gt[:, 0] == f] for f in np.unique(seq.gt[:, 0])}
     empty_gt = np.zeros((0, seq.gt.shape[1]))
+    eval_frames = getattr(seq, "eval_frames", None)       # klip yang hanya dilabeli di sebagian frame
+    regions = getattr(seq, "ignore_regions", None) or []  # area yang tidak dinilai: [(f_dari, f_sampai, xyxy)]
     gts, hyps = [], []
     for f in sorted(hyp):
+        if eval_frames is not None and f not in eval_frames:
+            continue
         g = gt_by_f.get(f, empty_gt)
         ids, boxes = hyp[f]
         hb = _xyxy_to_xywh(boxes)
+        act = [r[2] for r in regions if r[0] <= f <= r[1]]
+        if act and len(hb):
+            inside = _ioa(hb, np.array(act, np.float64)).max(1) >= 0.5
+            ids, hb = ids[~inside], hb[~inside]
         if len(g) and len(hb):
             s = mm.box_iou_xywh(g[:, 2:6], hb)
             s[s < 0.5 - mm.EPS] = 0

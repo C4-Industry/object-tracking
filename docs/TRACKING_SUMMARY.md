@@ -6,6 +6,29 @@ Kode: `src/object_tracking/zoo.py` (semua tracker), `tune.py` (tuning), `lite.py
 Hasil tuning: `configs/tracker_tuned.json`
 Hasil mentah: repo nana-detect-ppe, `experiments/notebook01/20261109_1427_helm_tracking/C4_tracking_test_*.csv`
 
+## Pembaruan 12 November 2026: label manusia
+
+Semua angka di bawah dinilai terhadap tracker referensi. Dengan label ID manusia di 9 klip PT SRP (notebook 05), urutannya berubah: **Lite bawaan** lebih baik daripada Lite tuned (3 FPS, detektor stg2: IDF1 0,813 vs 0,681), dan tetap jauh di atas ByteTrack yang dipakai sekarang (0,582). Di dalam pipeline hen-detect-ppe, Lite menaikkan IDF1 dari 0,644 ke 0,743. Rincian: [EVALUASI_GROUND_TRUTH.md](EVALUASI_GROUND_TRUTH.md).
+
+## Pembaruan 11 November 2026: detektor `dfine-n-960x540-stride-8`
+
+Notebook 02 dijalankan ulang dengan detektor baru (run `20261111_1437`). Hasil di 5 klip kamera test, 2 sampai 6 FPS:
+
+| Tracker | IDF1 | ID switch |
+|---|---|---|
+| **Lite tuned** | **0,901** | **59** |
+| Lite bawaan | 0,866 | 94 |
+| TrackTrack tuned | 0,859 | 132 |
+| ByteTrack tuned | 0,823 | 105 |
+| ByteTrack (pipeline sekarang) | 0,764 | 210 |
+
+- Lite tetap terbaik. Parameter barunya berbeda cukup jauh: OCR, ORU, dan box diperbesar **mati**, dengan batas IoU tahap 1 lebih longgar (0,155). Detektor baru tampaknya memberi box yang lebih stabil antar frame, jadi alat bantu itu tidak lagi diperlukan.
+- Ablasi di run itu belum bisa dipakai untuk opsi yang sudah mati (versi lama hanya mematikan opsi, tidak menyalakannya). Ablasi di notebook 02 sudah diperbaiki: setiap opsi dibalik. Jalankan ulang bagian 5 untuk melihat apakah menyalakan OCR atau box diperbesar masih membantu.
+- Angka ini tidak bisa dibandingkan langsung dengan hasil detektor 1248x704 di bawah, karena tracker referensinya juga dibuat dari detektor masing-masing (kesepakatan dua referensi naik dari 0,893 ke 0,932). Untuk membandingkan detektor, pakai label manusia (notebook 05).
+- Waktu detektor saat membuat cache: median 46,7 ms per frame (1248x704 v3: 24,8 ms). Dengan decode video 2688x1520 (84 ms per detik video), 12 kamera di 4 FPS butuh sekitar 4 jalur proses.
+
+Hasil di bawah ini adalah run sebelumnya dengan detektor `dfine-n-1248x704-commercial-v3`.
+
 ## Ringkasan
 
 | Peringkat | Tracker | IDF1 | ID switch | ID dibuat (referensi 196) | Catatan |

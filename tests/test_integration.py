@@ -1,5 +1,6 @@
 """API integrasi: PersonTracker, CameraTrackers, dan pengganti tracker di ComplianceTracker."""
 
+import json
 import sys
 from pathlib import Path
 
@@ -8,8 +9,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from object_tracking import (LITE_TUNED_PARAMS, CameraTrackers, LiteForComplianceTracker,  # noqa: E402
-                             PersonTracker, load_lite_config)
+from object_tracking import (LITE_PRESETS, LITE_TUNED_DETECTOR, CameraTrackers,  # noqa: E402
+                             LiteForComplianceTracker, PersonTracker, load_lite_config)
 from object_tracking.boxes import TrackerBoxes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,14 +25,22 @@ def _scene(t):
 
 
 def test_parameter_bawaan_sama_dengan_json():
-    cfg_mod, inp_mod = load_lite_config()
+    """configs/tracker_tuned.json (hasil notebook 02 terakhir) harus sama dengan preset di integration.py
+    untuk detektor yang dipakai saat tuning. Kalau gagal: salin hasil tuning ke LITE_PRESETS."""
+    info = json.loads((ROOT / "configs" / "tracker_tuned.json").read_text()).get("info", {})
+    det = Path(info.get("detector", LITE_TUNED_DETECTOR)).stem
+    cfg_mod, inp_mod = load_lite_config(detector=det)
     cfg_json, inp_json = load_lite_config(ROOT / "configs" / "tracker_tuned.json")
     assert cfg_mod == cfg_json and inp_mod == inp_json
-    assert set(LITE_TUNED_PARAMS) <= set(cfg_mod.__dataclass_fields__)
+    assert det == LITE_TUNED_DETECTOR, "tuning terakhir memakai detektor lain dari LITE_TUNED_DETECTOR"
+    for d in LITE_PRESETS:
+        cfg, _ = load_lite_config(detector=d)
+        assert set(LITE_PRESETS[d]["params"]) <= set(cfg.__dataclass_fields__)
 
 
-def test_id_stabil_dan_det_idx_benar():
-    trk = PersonTracker.tuned()
+@pytest.mark.parametrize("detector", list(LITE_PRESETS))
+def test_id_stabil_dan_det_idx_benar(detector):
+    trk = PersonTracker.tuned(detector=detector)
     ids = []
     for k in range(12):                      # 4 FPS, 3 detik
         t = k / 4
@@ -47,8 +56,9 @@ def test_id_stabil_dan_det_idx_benar():
     assert trk.ids_shown == 2
 
 
-def test_tertutup_lalu_kembali():
-    trk = PersonTracker.tuned()
+@pytest.mark.parametrize("detector", list(LITE_PRESETS))
+def test_tertutup_lalu_kembali(detector):
+    trk = PersonTracker.tuned(detector=detector)
     first = None
     for k in range(20):
         t = k / 4

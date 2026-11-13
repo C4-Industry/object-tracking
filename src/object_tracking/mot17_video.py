@@ -1,7 +1,7 @@
-"""Video perbandingan tracker di satu sekuens MOT17: video asli + label manusia + satu panel per tracker.
-
-Semua tracker diberi deteksi publik MOT17 yang sama (seperti di benchmark), jadi beda antar panel murni dari
-tracker. Karena MOT17 punya label ID manusia, setiap panel tracker juga menandai ID SWITCH tepat di frame
+"""Video perbandingan tracker untuk satu sekuens berlabel (MOT17 atau klip CCTV dengan ground truth CVAT):
+video asli + label manusia + satu panel per tracker.
+Semua tracker diberi deteksi yang sama (deteksi publik MOT17, atau D-FINE untuk klip CCTV), jadi beda antar panel
+murni dari tracker. Karena sekuensnya punya label ID manusia, setiap panel tracker juga menandai ID SWITCH tepat di frame
 kejadiannya: orang yang sama (menurut label) tiba-tiba memegang ID tracker yang berbeda. Box-nya diberi tepi
 MERAH tebal dan label "SWITCH". Penghitungnya memakai aturan CLEAR MOT (IoU >= 0,5, pasangan lama
 diutamakan), jadi total di akhir video sama dengan kolom IDSW di tabel benchmark.
@@ -118,13 +118,13 @@ def render_comparison(seq: mot17.Seq, video_path: str | Path, specs: dict[str, T
     sama dengan aslinya dan terlihat seperti CCTV yang diproses di FPS tersebut.
     Hasil: dict berisi path video, path gambar cuplikan, dan tabel angka per tracker."""
     vinfo = video_info(video_path)
-    if abs(vinfo["frames"] - seq.length) > 1:
-        raise RuntimeError(f"jumlah frame video ({vinfo['frames']}) beda dengan label ({seq.length})")
+    if vinfo["frames"] + 1 < seq.length:     # video boleh lebih panjang (mis. hanya sebagian yang dinilai)
+        raise RuntimeError(f"video ({vinfo['frames']} frame) lebih pendek dari label ({seq.length} frame)")
     step = mot17.frame_step(seq, target_fps)
     proc_fps = seq.fps / step
     last = seq.length if not max_sec else min(seq.length, int(max_sec * seq.fps))
 
-    # 1. jalankan semua tracker sekali (deteksi publik yang sama), nilai, dan cari kejadian ID switch
+    # 1. jalankan semua tracker sekali (deteksi yang sama), nilai, dan cari kejadian ID switch
     runs = {}
     names = list(specs)
     for name in (progress(names) if progress else names):
@@ -225,7 +225,7 @@ def render_comparison(seq: mot17.Seq, video_path: str | Path, specs: dict[str, T
                 ("  (orang sama, ID tracker berubah)", 0.5, (210, 210, 210)),
                 ("abu-abu = box di orang yang tidak dinilai", 0.5, (160, 160, 160)),
                 ("ID switch a/b = sejauh ini / total", 0.5, (210, 210, 210)),
-                (f"deteksi publik {seq.detector}, sama untuk semua", 0.5, (210, 210, 210)),
+                (f"deteksi {seq.detector}, sama untuk semua", 0.5, (210, 210, 210)),
             ])
         panels += [blank] * (rows * cols - len(panels))
         grid = np.vstack([np.hstack(panels[r * cols:(r + 1) * cols]) for r in range(rows)])

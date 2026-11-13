@@ -2,6 +2,12 @@
   "note": "File model tidak masuk git. Salin dari nana-detect-ppe/models/ atau unduh dari S3 (lihat models/README.md).",
   "models": [
     {
+      "path": "models/dfine-n-960x540-stride-8.onnx",
+      "bytes": 17001859,
+      "sha256": "6901583c9f24d264ff581f4ec7f4b71707c5377a3695bb24d729511229da69df",
+      "note": "detektor yang dipakai untuk Lite tuned sejak 11 Nov 2026 (dari S3)"
+    },
+    {
       "path": "models/dfine-n-1248x704-commercial-v3.onnx",
       "role": "detector",
       "classes": [
@@ -28,6 +34,12 @@
       "sha256": "f39d5e1a99bb22a6c1c2f6f7fb71a580fded3716647e5c525102771bf3e1d4c5",
       "eval": "test commercial_combined_v3, resize area: mAP50 0.821, helmet AP50 0.658 (docs/EVAL_COMMERCIAL_V3.md)",
       "default": false
+    },
+    {
+      "path": "models/dfine-n-stg2-960.onnx",
+      "bytes": 15690827,
+      "sha256": "78411143c173c39827fe09944cb52836f9bc7e50046a1cb4bea88032c4d7e55b",
+      "note": "detektor pipeline hen-detect-ppe sekarang (models/dfine_n_stg2/model.onnx), untuk notebook 05"
     }
   ]
 }
